@@ -1,0 +1,23 @@
+{
+  "name": "claude-usage",
+  "version": "1.0.0",
+  "description": "A lightweight waybar/polybar module to monitor your Claude Code usage limits",
+  "type": "module",
+  "scripts": {
+    "dev": "bun run src/index.ts",
+    "build": "bun build src/index.ts --compile --outfile dist/claude-usage",
+    "install": "bun run build && mkdir -p ~/.local/bin && cp dist/claude-usage ~/.local/bin/claude-usage && chmod +x ~/.local/bin/claude-usage"
+  },
+  "keywords": [
+    "claude",
+    "waybar",
+    "polybar",
+    "usage",
+    "monitor"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "bun-types": "^1.3.5"
+  }
+}

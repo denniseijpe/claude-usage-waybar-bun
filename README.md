@@ -1,6 +1,8 @@
 # claude-usage
 
-A lightweight waybar/polybar module to monitor your Claude Code usage limits.
+A lightweight waybar/polybar module to monitor your Claude Code usage limits using Bun.
+
+This is a fork of [bartvanvliet/claude-usage](https://github.com/bartvanvliet/claude-usage.git).
 
 ![Screenshot](screenshot.png)
 
@@ -11,36 +13,36 @@ A lightweight waybar/polybar module to monitor your Claude Code usage limits.
 - Desktop notifications at 50%, 80%, 90%, and 95% thresholds
 - Color-coded status (normal, warning, critical)
 - Click to open Claude usage dashboard
+- Compiles to a single standalone executable (no runtime dependencies)
 
 ## Requirements
 
-- Python 3.6+
-- `curl`
-- `notify-send` (libnotify)
-- Claude Code CLI authenticated (`~/.claude/.credentials.json`)
+- [Bun](https://bun.sh) (for building)
+- `notify-send` (libnotify) for desktop notifications
+- Claude Code CLI or OpenCode authenticated
 - Waybar or Polybar
 
 ## Installation
 
-### Manual
-
 ```bash
 # Clone the repo
-git clone https://github.com/bartvanvliet/claude-usage.git
-cd claude-usage
+git clone https://github.com/denniseijpe/claude-usage-waybar-bun.git
+cd claude-usage-waybar-bun
 
-# Copy to your local bin
-cp claude-usage ~/.local/bin/
-chmod +x ~/.local/bin/claude-usage
-
-# Test it
-claude-usage
+# Build and install to ~/.local/bin
+bun run install
 ```
 
-### One-liner
+This compiles a standalone executable and copies it to `~/.local/bin/claude-usage`.
+
+## Development
 
 ```bash
-curl -sL https://raw.githubusercontent.com/bartvanvliet/claude-usage/main/claude-usage -o ~/.local/bin/claude-usage && chmod +x ~/.local/bin/claude-usage
+# Run directly without building
+bun run dev
+
+# Build only (outputs to dist/claude-usage)
+bun run build
 ```
 
 ## Waybar Configuration
@@ -69,7 +71,7 @@ Add to your `~/.config/waybar/style.css`:
 
 ```css
 #custom-claude-usage {
-  margin: 0 7.5px;
+  padding: 0 7.5px;
 }
 
 #custom-claude-usage.warning {
@@ -101,7 +103,12 @@ background-color=#302030
 
 ## How It Works
 
-The script reads your Claude Code OAuth credentials from `~/.claude/.credentials.json` (created when you authenticate with `claude`) and calls the Anthropic API to fetch your current usage:
+The executable reads OAuth credentials from one of the following sources (in order):
+
+1. **Claude Code CLI**: `~/.claude/.credentials.json`
+2. **OpenCode**: `~/.local/share/opencode/auth.json`
+
+It checks token expiration and uses the first valid token found, then calls the Anthropic API:
 
 - `GET https://api.anthropic.com/api/oauth/usage` - Usage percentages and reset times
 - `GET https://api.anthropic.com/api/oauth/profile` - Account and organization info
@@ -110,12 +117,12 @@ Notification state is stored in `~/.cache/claude-usage-state.json` to prevent du
 
 ## Output Format
 
-The script outputs waybar-compatible JSON:
+The executable outputs waybar-compatible JSON:
 
 ```json
 {
-  "text": "󰧑 19%",
-  "tooltip": "Bart @ Marktmentor\n\n5-hour:   19% used\n         resets in 3h 45m (Sun 17:59)\n\n7-day:     3% used\n         resets in 6d 3h (Sat 17:59)\n\nPlan: Claude Team\nTier: default_claude_max_5x\nExtra: $0.00 (no limit)",
+  "text": "󰧑  19% ",
+  "tooltip": "John Doe\n\n5-hour:   19% used\n         resets in 3h 45m (Sun 17:59)\n\n7-day:     3% used\n         resets in 6d 3h (Sat 17:59)\n\nPlan: Claude Team\nTier: default_claude_max_5x\nExtra: $0.00 (no limit)",
   "class": "normal",
   "percentage": 19
 }
@@ -124,6 +131,10 @@ The script outputs waybar-compatible JSON:
 ## Credits
 
 Inspired by [CodexBar](https://github.com/steipete/CodexBar) - a macOS menu bar app for tracking Claude/Codex usage.
+
+Forked from [bartvanvliet/claude-usage](https://github.com/bartvanvliet/claude-usage.git).
+
+Vibe coded with [OpenCode](https://opencode.ai) and Claude Opus 4.5.
 
 ## License
 
