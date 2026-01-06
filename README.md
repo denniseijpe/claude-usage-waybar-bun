@@ -134,7 +134,7 @@ The executable outputs waybar-compatible JSON:
 
 ```json
 {
-  "text": "󰧑  19% ",
+  "text": "󰧑  19%",
   "tooltip": "John Doe\n\n5-hour:   19% used\n         resets in 3h 45m (Sun 17:59)\n\n7-day:     3% used\n         resets in 6d 3h (Sat 17:59)\n\nPlan: Claude Team\nTier: default_claude_max_5x\nExtra: $0.00 (no limit)",
   "class": "normal",
   "percentage": 19
