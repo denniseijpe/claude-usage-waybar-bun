@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "bun run src/index.ts",
     "build": "bun build src/index.ts --compile --outfile dist/claude-usage",
-    "install": "bun run build && mkdir -p ~/.local/bin && cp dist/claude-usage ~/.local/bin/claude-usage && chmod +x ~/.local/bin/claude-usage"
+    "install": "mkdir -p ~/.local/bin && cp src/index.ts ~/.local/bin/claude-usage && chmod +x ~/.local/bin/claude-usage",
+    "install-binary": "bun run build && mkdir -p ~/.local/bin && cp dist/claude-usage ~/.local/bin/claude-usage && chmod +x ~/.local/bin/claude-usage"
   },
   "keywords": [
     "claude",

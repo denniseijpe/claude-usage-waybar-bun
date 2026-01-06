@@ -17,7 +17,7 @@ This is a fork of [bartvanvliet/claude-usage](https://github.com/bartvanvliet/cl
 
 ## Requirements
 
-- [Bun](https://bun.sh) (for building)
+- [Bun](https://bun.sh) (required for script install, or just for building binary)
 - `notify-send` (libnotify) for desktop notifications
 - Claude Code CLI or OpenCode authenticated
 - Waybar or Polybar
@@ -28,12 +28,25 @@ This is a fork of [bartvanvliet/claude-usage](https://github.com/bartvanvliet/cl
 # Clone the repo
 git clone https://github.com/denniseijpe/claude-usage-waybar-bun.git
 cd claude-usage-waybar-bun
+```
 
-# Build and install to ~/.local/bin
+### Option 1: Script (requires Bun runtime)
+
+Installs the TypeScript source directly. Smaller file size (~10KB), but requires Bun to be installed on your system.
+
+```bash
 bun run install
 ```
 
-This compiles a standalone executable and copies it to `~/.local/bin/claude-usage`.
+### Option 2: Standalone Binary (no runtime dependencies)
+
+Compiles to a self-contained executable (~100MB). No runtime dependencies needed after installation.
+
+```bash
+bun run install-binary
+```
+
+Both options install to `~/.local/bin/claude-usage`.
 
 ## Development
 

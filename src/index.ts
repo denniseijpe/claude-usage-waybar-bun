@@ -1,3 +1,4 @@
+#!/usr/bin/env bun
 /**
  * Claude Code usage monitor for waybar/polybar.
  * Outputs JSON compatible with waybar's custom module format.
